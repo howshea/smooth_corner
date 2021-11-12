@@ -1,6 +1,6 @@
 import 'package:example/smooth_corner_debug.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:smooth_corner/smooth_corner.dart';
 
 void main() {
   runApp(MyApp());
@@ -49,7 +49,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-  double radius = 100;
+  double radius = kIsWeb?100:40;
   double smoothness = 0.6;
 
   void _incrementCounter() {
@@ -97,22 +97,21 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
+            Padding(padding: const EdgeInsets.only(top: 40)),
             Container(
-              width: 500,
-              height: 500,
+              width: kIsWeb?500:200,
+              height: kIsWeb?500:200,
               alignment: Alignment.center,
               decoration: ShapeDecoration(
                 shape: SmoothShapeDebug(radius:radius, smoothness: smoothness),
                 color: Colors.amber,
               ),
               child: Text(
-                '$_counter',
-                style: Theme.of(context).textTheme.headline3,
+                'radius:${radius.toInt()},smooth:${smoothness.toStringAsFixed(2)}',
+                style: kIsWeb?Theme.of(context).textTheme.headline4:Theme.of(context).textTheme.bodyText1,
               ),
             ),
+            Padding(padding: const EdgeInsets.only(top: 40)),
             Slider(
               min: 0.0,
               max: 1.0,
@@ -126,7 +125,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Slider(
               activeColor: Colors.amber,
               min: 0,
-              max: 250,
+              max: kIsWeb?250:100,
               onChanged: (double value) {
                 setState(() {
                   radius = value;
