@@ -74,6 +74,16 @@ class SmoothBorderDebug extends SmoothRectangleBorder {
 
     canvas.drawCircle(Offset(right, top + min(height / 2, p)), 5, pointPaint);
   }
+
+  @override
+  SmoothBorderDebug scale(double t) {
+    return SmoothBorderDebug(radius: radius * t);
+  }
+
+  @override
+  SmoothBorderDebug copyWith({BorderSide? side}) {
+    return SmoothBorderDebug(side:side ?? this.side);
+  }
 }
 
 extension _Math on double {

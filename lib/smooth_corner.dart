@@ -4,9 +4,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
+/// A rectangular border with variable smoothness transitions between 
+/// the straight sides and the rounded corners.
 class SmoothRectangleBorder extends OutlinedBorder {
-  final double smoothness;
-  final double radius;
 
   SmoothRectangleBorder({
     this.smoothness = 0.0,
@@ -14,8 +14,20 @@ class SmoothRectangleBorder extends OutlinedBorder {
     BorderSide side = BorderSide.none,
   }) : super(side: side);
 
+  /// The radius for each corner.
+  ///
+  /// Negative radius values are clamped to 0.0 by [getInnerPath] and
+  /// [getOuterPath].
+  /// final BorderRadiusGeometry borderRadius;
+  final double radius;
+
+  /// The smoothness of corners.
+  /// 
+  /// 0.0 - 1.0
+  final double smoothness;
+
   @override
-  EdgeInsetsGeometry get dimensions => const EdgeInsets.all(0);
+  EdgeInsetsGeometry get dimensions => EdgeInsets.all(side.width);
 
   @override
   Path getInnerPath(Rect rect, {TextDirection? textDirection}) {
