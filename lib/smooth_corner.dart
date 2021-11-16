@@ -4,11 +4,11 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-class SmoothShape extends OutlinedBorder {
+class SmoothRectangleBorder extends OutlinedBorder {
   final double smoothness;
   final double radius;
 
-  SmoothShape({
+  SmoothRectangleBorder({
     this.smoothness = 0.0,
     this.radius = 0.0,
     BorderSide side = BorderSide.none,
@@ -137,7 +137,8 @@ class SmoothShape extends OutlinedBorder {
       );
 
       path.arcTo(
-        Rect.fromCircle(center: Offset(left + radius, bottom - radius), radius: radius),
+        Rect.fromCircle(
+            center: Offset(left + radius, bottom - radius), radius: radius),
         (90 + angleBezier).toRadian(),
         (90 - angleBezier * 2).toRadian(),
         false,
@@ -163,7 +164,8 @@ class SmoothShape extends OutlinedBorder {
         top + (p - a - b - c),
       );
       path.arcTo(
-        Rect.fromCircle(center: Offset(left + radius, top + radius), radius: radius),
+        Rect.fromCircle(
+            center: Offset(left + radius, top + radius), radius: radius),
         (180 + angleBezier).toRadian(),
         (90 - angleBezier * 2).toRadian(),
         false,
@@ -184,18 +186,16 @@ class SmoothShape extends OutlinedBorder {
   }
 
   @override
-  void paint(Canvas canvas, Rect rect, {TextDirection? textDirection}) {
-  }
+  void paint(Canvas canvas, Rect rect, {TextDirection? textDirection}) {}
 
   @override
   ShapeBorder scale(double t) {
-    return SmoothShape(radius: radius * t);
+    return SmoothRectangleBorder(radius: radius * t);
   }
 
   @override
-  OutlinedBorder copyWith({BorderSide? side}) {
-    // TODO: implement copyWith
-    throw UnimplementedError();
+  SmoothRectangleBorder copyWith({BorderSide? side}) {
+    return SmoothRectangleBorder(side: side ?? BorderSide.none);
   }
 }
 

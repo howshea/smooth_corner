@@ -103,7 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
               height: kIsWeb?500:200,
               alignment: Alignment.center,
               decoration: ShapeDecoration(
-                shape: SmoothShapeDebug(radius:radius, smoothness: smoothness),
+                shape: SmoothBorderDebug(radius:radius, smoothness: smoothness),
                 color: Colors.amber,
               ),
               child: Text(
