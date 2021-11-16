@@ -65,9 +65,17 @@ class _MyHomePageState extends State<MyHomePage> {
             Container(
               width: kIsWeb ? 500 : 200,
               height: kIsWeb ? 500 : 200,
+              alignment: Alignment.center,
               decoration: ShapeDecoration(
-                shape: SmoothBorderDebug(radius:radius, smoothness: smoothness),
+                shape:
+                    SmoothBorderDebug(radius: radius, smoothness: smoothness),
                 color: Colors.amber,
+              ),
+              child: Text(
+                'radius:${radius.toInt()},smooth:${smoothness.toStringAsFixed(2)}',
+                style: kIsWeb
+                    ? Theme.of(context).textTheme.headline4
+                    : Theme.of(context).textTheme.bodyText1,
               ),
             ),
             Padding(padding: const EdgeInsets.only(top: 40)),
