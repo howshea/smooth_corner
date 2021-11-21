@@ -4,24 +4,26 @@ import 'package:flutter/material.dart';
 import 'package:smooth_corner/smooth_corner.dart';
 
 class SmoothBorderDebug extends SmoothRectangleBorder {
-  final double smoothness;
-  final double radius;
-
   SmoothBorderDebug({
-    this.smoothness = 0.0,
-    this.radius = 0.0,
-    BorderSide side = BorderSide.none,
-  }) : super(side: side);
+    double smoothness = 0.0,
+    double radius = 0.0,
+    CornerSetting setting = const CornerSetting.only(),
+  }) : super(
+          setting: setting,
+          smoothness: smoothness,
+          radius: radius,
+        );
 
   @override
   void paint(Canvas canvas, Rect rect, {TextDirection? textDirection}) {
+    if (!setting.topRightEnable) return;
+
     var paint = Paint()..color = Colors.redAccent;
     var width = rect.width;
     var height = rect.height;
     var top = rect.top;
     var left = rect.left;
     var right = rect.right;
-    
     var shortestSide = min(width, height);
     var radius = this.radius;
 
@@ -49,7 +51,8 @@ class SmoothBorderDebug extends SmoothRectangleBorder {
     var b = ((p - l) - (1 + dToC) * c) / 3;
     var a = 2 * b;
 
-    canvas.drawCircle(Offset(right - radius, top + radius), radius, Paint()..color = Colors.black12);
+    canvas.drawCircle(Offset(right - radius, top + radius), radius,
+        Paint()..color = Colors.black12);
 
     canvas.drawArc(
       Rect.fromCircle(
@@ -66,7 +69,8 @@ class SmoothBorderDebug extends SmoothRectangleBorder {
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1;
 
-    canvas.drawCircle(Offset(left + max(width / 2, width - p), top), 5, pointPaint);
+    canvas.drawCircle(
+        Offset(left + max(width / 2, width - p), top), 5, pointPaint);
 
     canvas.drawCircle(Offset(right - (p - a - b - c), top + d), 5, pointPaint);
 
@@ -78,11 +82,6 @@ class SmoothBorderDebug extends SmoothRectangleBorder {
   @override
   SmoothBorderDebug scale(double t) {
     return SmoothBorderDebug(radius: radius * t);
-  }
-
-  @override
-  SmoothBorderDebug copyWith({BorderSide? side}) {
-    return SmoothBorderDebug(side:side ?? this.side);
   }
 }
 

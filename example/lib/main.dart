@@ -33,6 +33,10 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   double radius = kIsWeb ? 100 : 40;
   double smoothness = 0.6;
+  bool topLeftEnable = true;
+  bool topRightEnable = true;
+  bool bottomLeftEnable = true;
+  bool bottomRightEnable = true;
 
   @override
   Widget build(BuildContext context) {
@@ -51,8 +55,14 @@ class _MyHomePageState extends State<MyHomePage> {
               child: ClipPath(
                 clipper: ShapeBorderClipper(
                   shape: SmoothRectangleBorder(
-                    radius: 40,
                     smoothness: smoothness,
+                    radius: radius,
+                    setting: CornerSetting.fromLTRB(
+                      topLeftEnable,
+                      topRightEnable,
+                      bottomLeftEnable,
+                      bottomRightEnable,
+                    ),
                   ),
                 ),
                 child: Image.network(
@@ -67,8 +77,16 @@ class _MyHomePageState extends State<MyHomePage> {
               height: kIsWeb ? 500 : 200,
               alignment: Alignment.center,
               decoration: ShapeDecoration(
-                shape:
-                    SmoothBorderDebug(radius: radius, smoothness: smoothness),
+                shape: SmoothBorderDebug(
+                  radius: radius,
+                  smoothness: smoothness,
+                  setting: CornerSetting.fromLTRB(
+                    topLeftEnable,
+                    topRightEnable,
+                    bottomLeftEnable,
+                    bottomRightEnable,
+                  ),
+                ),
                 color: Colors.amber,
               ),
               child: Text(
@@ -99,10 +117,81 @@ class _MyHomePageState extends State<MyHomePage> {
                 });
               },
               value: radius,
+            ),
+            Wrap(
+              crossAxisAlignment: WrapCrossAlignment.center,
+              runSpacing: 10,
+              children: [
+                CornerCheckBox(
+                  cornerEnable: topLeftEnable,
+                  text: 'TopLeft ',
+                  onChanged: (value) {
+                    topLeftEnable = value!;
+                    setState(() {});
+                  },
+                ),
+                CornerCheckBox(
+                  cornerEnable: topRightEnable,
+                  text: 'TopRight ',
+                  onChanged: (value) {
+                    topRightEnable = value!;
+                    setState(() {});
+                  },
+                ),
+                CornerCheckBox(
+                  cornerEnable: bottomRightEnable,
+                  text: 'BottomRight ',
+                  onChanged: (value) {
+                    bottomRightEnable = value!;
+                    setState(() {});
+                  },
+                ),
+                CornerCheckBox(
+                  cornerEnable: bottomLeftEnable,
+                  text: 'BottomLeft ',
+                  onChanged: (value) {
+                    bottomLeftEnable = value!;
+                    setState(() {});
+                  },
+                ),
+              ],
             )
           ],
         ),
       ),
+    );
+  }
+}
+
+class CornerCheckBox extends StatelessWidget {
+  final bool cornerEnable;
+  final ValueChanged<bool?>? onChanged;
+  final String? text;
+
+  const CornerCheckBox({
+    Key? key,
+    this.cornerEnable = true,
+    this.onChanged,
+    this.text,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SizedBox(
+          height: 15,
+          child: Switch(
+            value: cornerEnable,
+            onChanged: (value) => onChanged?.call(value),
+          ),
+        ),
+        Text(
+          '$text',
+          style: Theme.of(context).textTheme.bodyText1,
+        ),
+      ],
     );
   }
 }

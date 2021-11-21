@@ -4,30 +4,31 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-/// A rectangular border with variable smoothness transitions between 
+/// A rectangular border with variable smoothness transitions between
 /// the straight sides and the rounded corners.
-class SmoothRectangleBorder extends OutlinedBorder {
-
+class SmoothRectangleBorder extends ShapeBorder {
   SmoothRectangleBorder({
     this.smoothness = 0.0,
     this.radius = 0.0,
-    BorderSide side = BorderSide.none,
-  }) : super(side: side);
+    this.setting = const CornerSetting.only(),
+  }) : super();
 
   /// The radius for each corner.
   ///
   /// Negative radius values are clamped to 0.0 by [getInnerPath] and
   /// [getOuterPath].
-  /// final BorderRadiusGeometry borderRadius;
+  // final BorderRadiusGeometry borderRadius;
   final double radius;
 
   /// The smoothness of corners.
-  /// 
+  ///
   /// 0.0 - 1.0
   final double smoothness;
 
+  final CornerSetting setting;
+
   @override
-  EdgeInsetsGeometry get dimensions => EdgeInsets.all(side.width);
+  EdgeInsetsGeometry get dimensions => EdgeInsets.all(0);
 
   @override
   Path getInnerPath(Rect rect, {TextDirection? textDirection}) {
@@ -50,11 +51,7 @@ class SmoothRectangleBorder extends OutlinedBorder {
       var centerX = width / 2 + left;
 
       var shortestSide = min(width, height);
-      var radius = this.radius;
-
-      if (this.radius > shortestSide / 2) {
-        radius = shortestSide / 2;
-      }
+      var radius = min(this.radius, shortestSide / 2);
 
       var p = min(shortestSide / 2, (1 + smoothness) * radius);
 
@@ -79,117 +76,135 @@ class SmoothRectangleBorder extends OutlinedBorder {
       path.moveTo(centerX, top);
 
       // top right
-      path.lineTo(left + max(width / 2, width - p), top);
-      path.cubicTo(
-        right - (p - a),
-        top,
-        right - (p - a - b),
-        top,
-        right - (p - a - b - c),
-        top + d,
-      );
-      path.arcTo(
-        Rect.fromCircle(
-          center: Offset(right - radius, top + radius),
-          radius: radius,
-        ),
-        (270 + angleBezier).toRadian(),
-        (90 - 2 * angleBezier).toRadian(),
-        false,
-      );
-      path.cubicTo(
-        right,
-        top + (p - a - b),
-        right,
-        top + (p - a),
-        right,
-        top + min(height / 2, p),
-      );
+      if (setting.topRightEnable) {
+        path
+          ..lineTo(left + max(width / 2, width - p), top)
+          ..cubicTo(
+            right - (p - a),
+            top,
+            right - (p - a - b),
+            top,
+            right - (p - a - b - c),
+            top + d,
+          )
+          ..arcTo(
+            Rect.fromCircle(
+              center: Offset(right - radius, top + radius),
+              radius: radius,
+            ),
+            (270 + angleBezier).toRadian(),
+            (90 - 2 * angleBezier).toRadian(),
+            false,
+          )
+          ..cubicTo(
+            right,
+            top + (p - a - b),
+            right,
+            top + (p - a),
+            right,
+            top + min(height / 2, p),
+          );
+      } else {
+        path.lineTo(right, top);
+      }
 
       //bottom right
-      path.lineTo(
-        right,
-        top + max(height / 2, height - p),
-      );
-      path.cubicTo(
-        right,
-        bottom - (p - a),
-        right,
-        bottom - (p - a - b),
-        right - d,
-        bottom - (p - a - b - c),
-      );
-      path.arcTo(
-        Rect.fromCircle(
-          center: Offset(right - radius, bottom - radius),
-          radius: radius,
-        ),
-        angleBezier.toRadian(),
-        (90 - angleBezier * 2).toRadian(),
-        false,
-      );
-      path.cubicTo(
-        right - (p - a - b),
-        bottom,
-        right - (p - a),
-        bottom,
-        left + max(width / 2, width - p),
-        bottom,
-      );
+      if (setting.bottomRightEnable) {
+        path
+          ..lineTo(
+            right,
+            top + max(height / 2, height - p),
+          )
+          ..cubicTo(
+            right,
+            bottom - (p - a),
+            right,
+            bottom - (p - a - b),
+            right - d,
+            bottom - (p - a - b - c),
+          )
+          ..arcTo(
+            Rect.fromCircle(
+              center: Offset(right - radius, bottom - radius),
+              radius: radius,
+            ),
+            angleBezier.toRadian(),
+            (90 - angleBezier * 2).toRadian(),
+            false,
+          )
+          ..cubicTo(
+            right - (p - a - b),
+            bottom,
+            right - (p - a),
+            bottom,
+            left + max(width / 2, width - p),
+            bottom,
+          );
+      } else {
+        path.lineTo(right, bottom);
+      }
 
       //bottom left
-      path.lineTo(left + min(width / 2, p), bottom);
-      path.cubicTo(
-        left + (p - a),
-        bottom,
-        left + (p - a - b),
-        bottom,
-        left + (p - a - b - c),
-        bottom - d,
-      );
-
-      path.arcTo(
-        Rect.fromCircle(
-            center: Offset(left + radius, bottom - radius), radius: radius),
-        (90 + angleBezier).toRadian(),
-        (90 - angleBezier * 2).toRadian(),
-        false,
-      );
-
-      path.cubicTo(
-        left,
-        bottom - (p - a - b),
-        left,
-        bottom - (p - a),
-        left,
-        top + max(height / 2, height - p),
-      );
+      if (setting.bottomLeftEnable) {
+        path
+          ..lineTo(left + min(width / 2, p), bottom)
+          ..cubicTo(
+            left + (p - a),
+            bottom,
+            left + (p - a - b),
+            bottom,
+            left + (p - a - b - c),
+            bottom - d,
+          )
+          ..arcTo(
+            Rect.fromCircle(
+                center: Offset(left + radius, bottom - radius), radius: radius),
+            (90 + angleBezier).toRadian(),
+            (90 - angleBezier * 2).toRadian(),
+            false,
+          )
+          ..cubicTo(
+            left,
+            bottom - (p - a - b),
+            left,
+            bottom - (p - a),
+            left,
+            top + max(height / 2, height - p),
+          );
+      } else {
+        path.lineTo(left, bottom);
+      }
 
       //top left
-      path.lineTo(left, top + min(height / 2, p));
-      path.cubicTo(
-        left,
-        top + (p - a),
-        left,
-        top + (p - a - b),
-        left + d,
-        top + (p - a - b - c),
-      );
-      path.arcTo(
-        Rect.fromCircle(
-            center: Offset(left + radius, top + radius), radius: radius),
-        (180 + angleBezier).toRadian(),
-        (90 - angleBezier * 2).toRadian(),
-        false,
-      );
-      path.cubicTo(
-        left + (p - a - b),
-        top,
-        left + (p - a),
-        top,
-        left + min(width / 2, p),
-        top,
-      );
+      if (setting.topLeftEnable) {
+        path
+          ..lineTo(left, top + min(height / 2, p))
+          ..cubicTo(
+            left,
+            top + (p - a),
+            left,
+            top + (p - a - b),
+            left + d,
+            top + (p - a - b - c),
+          )
+          ..arcTo(
+            Rect.fromCircle(
+                center: Offset(left + radius, top + radius), radius: radius),
+            (180 + angleBezier).toRadian(),
+            (90 - angleBezier * 2).toRadian(),
+            false,
+          )
+          ..cubicTo(
+            left + (p - a - b),
+            top,
+            left + (p - a),
+            top,
+            left + min(width / 2, p),
+            top,
+          );
+      } else {
+        path.lineTo(left, top);
+      }
 
       path.close();
     }
@@ -204,11 +219,27 @@ class SmoothRectangleBorder extends OutlinedBorder {
   ShapeBorder scale(double t) {
     return SmoothRectangleBorder(radius: radius * t);
   }
+}
 
-  @override
-  SmoothRectangleBorder copyWith({BorderSide? side}) {
-    return SmoothRectangleBorder(side: side ?? BorderSide.none);
-  }
+class CornerSetting {
+  final bool topLeftEnable;
+  final bool topRightEnable;
+  final bool bottomLeftEnable;
+  final bool bottomRightEnable;
+
+  const CornerSetting.fromLTRB(
+    this.topLeftEnable,
+    this.topRightEnable,
+    this.bottomLeftEnable,
+    this.bottomRightEnable,
+  );
+
+  const CornerSetting.only({
+    this.topLeftEnable = true,
+    this.topRightEnable = true,
+    this.bottomLeftEnable = true,
+    this.bottomRightEnable = true,
+  });
 }
 
 extension _Math on double {
