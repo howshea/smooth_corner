@@ -15,11 +15,14 @@ class SmoothRectangleBorder extends ShapeBorder {
   ///
   /// Negative radius values are clamped to 0.0 by [getInnerPath] and
   /// [getOuterPath].
+  /// 
   /// If radiuses of X and Y from one corner are not equal, the smallest one will be used.
   final BorderRadiusGeometry borderRadius;
 
   /// The smoothness of corners.
+  /// 
   /// The concept comes from a feature called "corner smoothing" of Figma.
+  /// 
   /// 0.0 - 1.0
   final double smoothness;
 
