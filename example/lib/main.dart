@@ -31,7 +31,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  double radius = kIsWeb ? 100 : 40;
+  double radius = kIsWeb ? 80 : 40;
   double smoothness = 0.6;
   bool topLeftEnable = true;
   bool topRightEnable = true;
@@ -48,7 +48,6 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Padding(padding: const EdgeInsets.only(top: 20)),
             Container(
               width: 200,
               height: 200,
@@ -56,13 +55,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 clipper: ShapeBorderClipper(
                   shape: SmoothRectangleBorder(
                     smoothness: smoothness,
-                    radius: radius,
-                    setting: CornerSetting.fromLTRB(
-                      topLeftEnable,
-                      topRightEnable,
-                      bottomLeftEnable,
-                      bottomRightEnable,
-                    ),
+                    borderRadius:
+                        BorderRadius.circular(radius * (kIsWeb ? 0.5 : 1)),
                   ),
                 ),
                 child: Image.network(
@@ -73,19 +67,13 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Padding(padding: const EdgeInsets.only(top: 20)),
             Container(
-              width: kIsWeb ? 500 : 200,
-              height: kIsWeb ? 500 : 200,
+              width: kIsWeb ? 400 : 200,
+              height: kIsWeb ? 400 : 200,
               alignment: Alignment.center,
               decoration: ShapeDecoration(
                 shape: SmoothBorderDebug(
-                  radius: radius,
+                  borderRadius: BorderRadius.circular(radius),
                   smoothness: smoothness,
-                  setting: CornerSetting.fromLTRB(
-                    topLeftEnable,
-                    topRightEnable,
-                    bottomLeftEnable,
-                    bottomRightEnable,
-                  ),
                 ),
                 color: Colors.amber,
               ),
@@ -118,80 +106,9 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               value: radius,
             ),
-            Wrap(
-              crossAxisAlignment: WrapCrossAlignment.center,
-              runSpacing: 10,
-              children: [
-                CornerCheckBox(
-                  cornerEnable: topLeftEnable,
-                  text: 'TopLeft ',
-                  onChanged: (value) {
-                    topLeftEnable = value!;
-                    setState(() {});
-                  },
-                ),
-                CornerCheckBox(
-                  cornerEnable: topRightEnable,
-                  text: 'TopRight ',
-                  onChanged: (value) {
-                    topRightEnable = value!;
-                    setState(() {});
-                  },
-                ),
-                CornerCheckBox(
-                  cornerEnable: bottomRightEnable,
-                  text: 'BottomRight ',
-                  onChanged: (value) {
-                    bottomRightEnable = value!;
-                    setState(() {});
-                  },
-                ),
-                CornerCheckBox(
-                  cornerEnable: bottomLeftEnable,
-                  text: 'BottomLeft ',
-                  onChanged: (value) {
-                    bottomLeftEnable = value!;
-                    setState(() {});
-                  },
-                ),
-              ],
-            )
           ],
         ),
       ),
-    );
-  }
-}
-
-class CornerCheckBox extends StatelessWidget {
-  final bool cornerEnable;
-  final ValueChanged<bool?>? onChanged;
-  final String? text;
-
-  const CornerCheckBox({
-    Key? key,
-    this.cornerEnable = true,
-    this.onChanged,
-    this.text,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        SizedBox(
-          height: 15,
-          child: Switch(
-            value: cornerEnable,
-            onChanged: (value) => onChanged?.call(value),
-          ),
-        ),
-        Text(
-          '$text',
-          style: Theme.of(context).textTheme.bodyText1,
-        ),
-      ],
     );
   }
 }

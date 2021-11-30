@@ -6,17 +6,15 @@ import 'package:smooth_corner/smooth_corner.dart';
 class SmoothBorderDebug extends SmoothRectangleBorder {
   SmoothBorderDebug({
     double smoothness = 0.0,
-    double radius = 0.0,
-    CornerSetting setting = const CornerSetting.only(),
+    BorderRadiusGeometry borderRadius = BorderRadius.zero,
   }) : super(
-          setting: setting,
           smoothness: smoothness,
-          radius: radius,
+          borderRadius: borderRadius,
         );
 
   @override
   void paint(Canvas canvas, Rect rect, {TextDirection? textDirection}) {
-    if (!setting.topRightEnable) return;
+    if (borderRadius == BorderRadius.zero) return;
 
     var paint = Paint()..color = Colors.redAccent;
     var width = rect.width;
@@ -24,32 +22,22 @@ class SmoothBorderDebug extends SmoothRectangleBorder {
     var top = rect.top;
     var left = rect.left;
     var right = rect.right;
-    var shortestSide = min(width, height);
-    var radius = this.radius;
 
-    if (this.radius > shortestSide / 2) {
-      radius = shortestSide / 2;
-    }
+    var debugCorner = Corner(borderRadius.resolve(textDirection).toRRect(rect),
+        CornerLocation.tr, smoothness);
 
-    var p = min(shortestSide / 2, (1 + smoothness) * radius);
+    var radius = debugCorner.radius;
 
-    double angleBezier, angleCircle;
-    if (radius > shortestSide / 4) {
-      var changePercentage = (radius - shortestSide / 4) / (shortestSide / 4);
-      angleCircle = 90 * (1 - smoothness * (1 - changePercentage));
-      angleBezier = 45 * smoothness * (1 - changePercentage);
-    } else {
-      angleCircle = 90 * (1 - smoothness);
-      angleBezier = 45 * smoothness;
-    }
+    var p = debugCorner.p;
 
-    var dToC = tan(angleBezier.toRadian());
-    var longest = radius * tan(angleBezier.toRadian() / 2);
+    double angleBezier = debugCorner.angleBezier;
+    double angleCircle = debugCorner.angleCircle;
+
     var l = sin(angleCircle.toRadian() / 2) * radius * pow(2, 0.5);
-    var c = longest * cos(angleBezier.toRadian());
-    var d = c * dToC;
-    var b = ((p - l) - (1 + dToC) * c) / 3;
-    var a = 2 * b;
+    var c = debugCorner.c;
+    var d = debugCorner.d;
+    var b = debugCorner.b;
+    var a = debugCorner.a;
 
     canvas.drawCircle(Offset(right - radius, top + radius), radius,
         Paint()..color = Colors.black12);
@@ -81,7 +69,7 @@ class SmoothBorderDebug extends SmoothRectangleBorder {
 
   @override
   SmoothBorderDebug scale(double t) {
-    return SmoothBorderDebug(radius: radius * t);
+    return SmoothBorderDebug(borderRadius: borderRadius * t);
   }
 }
 
