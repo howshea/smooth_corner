@@ -5,24 +5,25 @@ enum CornerLocation { tl, tr, bl, br }
 
 /// A rectangular border with variable smoothness transitions between
 /// the straight sides and the rounded corners.
-class SmoothRectangleBorder extends ShapeBorder {
+class SmoothRectangleBorder extends OutlinedBorder {
   SmoothRectangleBorder({
     this.smoothness = 0.0,
     this.borderRadius = BorderRadius.zero,
-  }) : super();
+    BorderSide side = BorderSide.none,
+  }) : super(side: side);
 
   /// The radius for each corner.
   ///
   /// Negative radius values are clamped to 0.0 by [getInnerPath] and
   /// [getOuterPath].
-  /// 
+  ///
   /// If radiuses of X and Y from one corner are not equal, the smallest one will be used.
   final BorderRadiusGeometry borderRadius;
 
   /// The smoothness of corners.
-  /// 
+  ///
   /// The concept comes from a feature called "corner smoothing" of Figma.
-  /// 
+  ///
   /// 0.0 - 1.0
   final double smoothness;
 
@@ -31,7 +32,8 @@ class SmoothRectangleBorder extends ShapeBorder {
 
   @override
   Path getInnerPath(Rect rect, {TextDirection? textDirection}) {
-    return _getPath(borderRadius.resolve(textDirection).toRRect(rect));
+    return _getPath(
+        borderRadius.resolve(textDirection).toRRect(rect).deflate(side.width));
   }
 
   Path _getPath(RRect rrect) {
@@ -183,11 +185,40 @@ class SmoothRectangleBorder extends ShapeBorder {
   }
 
   @override
-  void paint(Canvas canvas, Rect rect, {TextDirection? textDirection}) {}
+  void paint(Canvas canvas, Rect rect, {TextDirection? textDirection}) {
+    if (rect.isEmpty) return;
+    switch (side.style) {
+      case BorderStyle.none:
+        break;
+      case BorderStyle.solid:
+        final Path path = _getPath(borderRadius
+            .resolve(textDirection)
+            .toRRect(rect)
+            .inflate(side.width / 2));
+        final Paint paint = side.toPaint();
+        canvas.drawPath(path, paint);
+        break;
+    }
+  }
 
   @override
   ShapeBorder scale(double t) {
-    return SmoothRectangleBorder(borderRadius: borderRadius * t);
+    return SmoothRectangleBorder(
+      borderRadius: borderRadius * t,
+      side: side.scale(t),
+    );
+  }
+
+  @override
+  SmoothRectangleBorder copyWith(
+      {BorderSide? side,
+      BorderRadiusGeometry? borderRadius,
+      double? smoothness}) {
+    return SmoothRectangleBorder(
+      borderRadius: borderRadius ?? this.borderRadius,
+      side: side ?? this.side,
+      smoothness: smoothness ?? this.smoothness,
+    );
   }
 }
 

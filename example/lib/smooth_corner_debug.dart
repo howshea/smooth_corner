@@ -6,14 +6,17 @@ import 'package:smooth_corner/smooth_corner.dart';
 class SmoothBorderDebug extends SmoothRectangleBorder {
   SmoothBorderDebug({
     double smoothness = 0.0,
+    BorderSide side = BorderSide.none,
     BorderRadiusGeometry borderRadius = BorderRadius.zero,
   }) : super(
           smoothness: smoothness,
+          side: side,
           borderRadius: borderRadius,
         );
 
   @override
   void paint(Canvas canvas, Rect rect, {TextDirection? textDirection}) {
+    super.paint(canvas, rect);
     if (borderRadius == BorderRadius.zero) return;
 
     var paint = Paint()..color = Colors.redAccent;

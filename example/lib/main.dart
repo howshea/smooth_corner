@@ -72,6 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
               alignment: Alignment.center,
               decoration: ShapeDecoration(
                 shape: SmoothBorderDebug(
+                  side: BorderSide(color: Colors.cyan, width: 2),
                   borderRadius: BorderRadius.circular(radius),
                   smoothness: smoothness,
                 ),
