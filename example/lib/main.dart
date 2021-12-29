@@ -44,71 +44,92 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              width: 200,
-              height: 200,
-              child: ClipPath(
-                clipper: ShapeBorderClipper(
-                  shape: SmoothRectangleBorder(
-                    smoothness: smoothness,
-                    borderRadius:
-                        BorderRadius.circular(radius * (kIsWeb ? 0.5 : 1)),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: GridView(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                ),
+                children: [
+                  Container(
+                    width: 200,
+                    height: 200,
+                    child: ClipPath(
+                      clipper: ShapeBorderClipper(
+                        shape: SmoothRectangleBorder(
+                          smoothness: smoothness,
+                          borderRadius: BorderRadius.circular(
+                              radius * (kIsWeb ? 0.5 : 1)),
+                        ),
+                      ),
+                      child: Image.network(
+                        "https://img1.mydrivers.com/img/20200424/s_cf611107e2d2469fa54b0d8ae2ee5a31.jpg",
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
-                ),
-                child: Image.network(
-                  "https://img1.mydrivers.com/img/20200424/s_cf611107e2d2469fa54b0d8ae2ee5a31.jpg",
-                  fit: BoxFit.cover,
-                ),
+                  SmoothContainer(
+                    width: kIsWeb ? 400 : 200,
+                    height: kIsWeb ? 400 : 200,
+                    smoothness: smoothness,
+                    side: BorderSide(color: Colors.teal, width: 2),
+                    borderRadius: BorderRadius.circular(radius),
+                    child: Text(
+                        'No one shall be held in slavery or servitude; slavery and the slave trade shall be prohibited in all their forms.'),
+                    alignment: Alignment.center,
+                  ),
+                  Container(
+                    width: kIsWeb ? 400 : 200,
+                    height: kIsWeb ? 400 : 200,
+                    alignment: Alignment.center,
+                    decoration: ShapeDecoration(
+                      shape: SmoothBorderDebug(
+                        side: BorderSide(color: Colors.cyan, width: 4),
+                        borderRadius: BorderRadius.circular(radius),
+                        smoothness: smoothness,
+                      ),
+                      color: Colors.amber,
+                    ),
+                    child: Text(
+                      'radius:${radius.toInt()} \nsmooth:${smoothness.toStringAsFixed(2)}',
+                      style: kIsWeb
+                          ? Theme.of(context).textTheme.headline4
+                          : Theme.of(context).textTheme.bodyText1,
+                    ),
+                  ),
+                ],
               ),
             ),
-            Padding(padding: const EdgeInsets.only(top: 20)),
-            Container(
-              width: kIsWeb ? 400 : 200,
-              height: kIsWeb ? 400 : 200,
-              alignment: Alignment.center,
-              decoration: ShapeDecoration(
-                shape: SmoothBorderDebug(
-                  side: BorderSide(color: Colors.cyan, width: 2),
-                  borderRadius: BorderRadius.circular(radius),
-                  smoothness: smoothness,
-                ),
-                color: Colors.amber,
-              ),
-              child: Text(
-                'radius:${radius.toInt()} \nsmooth:${smoothness.toStringAsFixed(2)}',
-                style: kIsWeb
-                    ? Theme.of(context).textTheme.headline4
-                    : Theme.of(context).textTheme.bodyText1,
-              ),
-            ),
-            Padding(padding: const EdgeInsets.only(top: 40)),
-            Slider(
-              min: 0.0,
-              max: 1.0,
-              onChanged: (double value) {
-                setState(() {
-                  smoothness = value;
-                });
-              },
-              value: smoothness,
-            ),
-            Slider(
-              activeColor: Colors.amber,
-              min: 0,
-              max: kIsWeb ? 250 : 100,
-              onChanged: (double value) {
-                setState(() {
-                  radius = value;
-                });
-              },
-              value: radius,
-            ),
-          ],
-        ),
+          ),
+          Padding(padding: const EdgeInsets.only(top: 40)),
+          Slider(
+            min: 0.0,
+            max: 1.0,
+            onChanged: (double value) {
+              setState(() {
+                smoothness = value;
+              });
+            },
+            value: smoothness,
+          ),
+          Slider(
+            activeColor: Colors.amber,
+            min: 0,
+            max: kIsWeb ? 250 : 100,
+            onChanged: (double value) {
+              setState(() {
+                radius = value;
+              });
+            },
+            value: radius,
+          ),
+        ],
       ),
     );
   }
