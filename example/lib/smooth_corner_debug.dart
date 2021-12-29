@@ -26,8 +26,10 @@ class SmoothBorderDebug extends SmoothRectangleBorder {
     var left = rect.left;
     var right = rect.right;
 
-    var debugCorner = Corner(borderRadius.resolve(textDirection).toRRect(rect),
-        CornerLocation.tr, smoothness);
+    var debugCorner = Corner(
+        borderRadius.resolve(textDirection).toRRect(rect).deflate(side.width),
+        CornerLocation.tr,
+        smoothness);
 
     var radius = debugCorner.radius;
 
@@ -42,12 +44,14 @@ class SmoothBorderDebug extends SmoothRectangleBorder {
     var b = debugCorner.b;
     var a = debugCorner.a;
 
-    canvas.drawCircle(Offset(right - radius, top + radius), radius,
+    canvas.drawCircle(
+        Offset(right - radius - side.width, top + radius + side.width),
+        radius,
         Paint()..color = Colors.black12);
 
     canvas.drawArc(
       Rect.fromCircle(
-        center: Offset(right - radius, top + radius),
+        center: Offset(right - radius - side.width, top + radius + side.width),
         radius: radius,
       ),
       (270 + angleBezier).toRadian(),
@@ -61,13 +65,22 @@ class SmoothBorderDebug extends SmoothRectangleBorder {
       ..strokeWidth = 1;
 
     canvas.drawCircle(
-        Offset(left + max(width / 2, width - p), top), 5, pointPaint);
+        Offset(left + max(width / 2, width - p) - side.width, top + side.width),
+        5,
+        pointPaint);
 
-    canvas.drawCircle(Offset(right - (p - a - b - c), top + d), 5, pointPaint);
+    canvas.drawCircle(
+        Offset(right - (p - a - b - c) - side.width, top + d + side.width),
+        5,
+        pointPaint);
 
-    canvas.drawCircle(Offset(right - d, top + d + l), 5, pointPaint);
+    canvas.drawCircle(Offset(right - d - side.width, top + d + l + side.width),
+        5, pointPaint);
 
-    canvas.drawCircle(Offset(right, top + min(height / 2, p)), 5, pointPaint);
+    canvas.drawCircle(
+        Offset(right - side.width, top + min(height / 2, p) + side.width),
+        5,
+        pointPaint);
   }
 
   @override

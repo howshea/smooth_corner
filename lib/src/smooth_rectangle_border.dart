@@ -38,7 +38,7 @@ class SmoothRectangleBorder extends OutlinedBorder {
 
   Path _getPath(RRect rrect) {
     var path = Path();
-    if (smoothness == 0) {
+    if (smoothness == 0 || borderRadius == BorderRadius.zero) {
       path.addRRect(rrect);
     } else {
       final width = rrect.width;
@@ -194,7 +194,7 @@ class SmoothRectangleBorder extends OutlinedBorder {
         final Path path = _getPath(borderRadius
             .resolve(textDirection)
             .toRRect(rect)
-            .inflate(side.width / 2));
+            .deflate(side.width / 2));
         final Paint paint = side.toPaint();
         canvas.drawPath(path, paint);
         break;
