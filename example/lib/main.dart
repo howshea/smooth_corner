@@ -60,15 +60,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   Container(
                     width: 200,
                     height: 200,
-                    child: ClipPath(
-                      clipper: ShapeBorderClipper(
-                        shape: SmoothRectangleBorder(
-                          smoothness: smoothness,
-                          borderRadius: BorderRadius.circular(
-                              radius * (kIsWeb ? 0.5 : 1)),
-                        ),
-                      ),
-                      child: Image.network(
+                    child: SmoothImage(
+                      image: Image.network(
                         "https://img1.mydrivers.com/img/20200424/s_cf611107e2d2469fa54b0d8ae2ee5a31.jpg",
                         fit: BoxFit.cover,
                       ),
