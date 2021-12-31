@@ -61,6 +61,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     width: 200,
                     height: 200,
                     child: SmoothImage(
+                      smoothness: smoothness,
+                      side: BorderSide(color: Colors.teal, width: 4),
+                      borderRadius: BorderRadius.circular(radius),
                       image: Image.network(
                         "https://img1.mydrivers.com/img/20200424/s_cf611107e2d2469fa54b0d8ae2ee5a31.jpg",
                         fit: BoxFit.cover,

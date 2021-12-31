@@ -31,7 +31,6 @@ class SmoothContainer extends Container {
     Widget? child,
     double? width,
     double? height,
-    Clip clipBehavior = Clip.none,
     AlignmentGeometry? alignment,
     EdgeInsetsGeometry? padding,
     Color? color,
@@ -45,7 +44,6 @@ class SmoothContainer extends Container {
           child: child,
           width: width,
           height: height,
-          clipBehavior: clipBehavior,
           alignment: alignment,
           padding: padding ?? EdgeInsets.all(side.width),
           foregroundDecoration: foregroundDecoration,
@@ -59,6 +57,7 @@ class SmoothContainer extends Container {
               borderRadius: borderRadius,
               smoothness: smoothness,
             ),
+            color: color,
           ),
         );
 }

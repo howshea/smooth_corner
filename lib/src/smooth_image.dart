@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:smooth_corner/smooth_corner.dart';
 
@@ -8,7 +10,7 @@ class SmoothImage extends StatelessWidget {
   /// [getOuterPath].
   ///
   /// If radiuses of X and Y from one corner are not equal, the smallest one will be used.
-  final BorderRadiusGeometry borderRadius;
+  final BorderRadius borderRadius;
 
   /// The smoothness of corners.
   ///
@@ -35,17 +37,48 @@ class SmoothImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      clipBehavior: Clip.antiAlias,
-      child: ClipPath(
-        clipper: ShapeBorderClipper(
-          shape: SmoothRectangleBorder(
-            smoothness: smoothness,
-            borderRadius: borderRadius,
-          ),
-        ),
-        child: image,
-      ),
+    var shaper = SmoothRectangleBorder(
+      smoothness: smoothness,
+      borderRadius: borderRadius - BorderRadius.circular(side.width),
     );
+    return CustomPaint(
+      child: Container(
+        padding: EdgeInsets.all(max(0.0, side.width - 1)),
+        child: ClipPath(
+          clipper: ShapeBorderClipper(
+            shape: shaper,
+          ),
+          child: image,
+        ),
+      ),
+      foregroundPainter: _BorderPainter(side, borderRadius, shaper),
+    );
+  }
+}
+
+class _BorderPainter extends CustomPainter {
+  final BorderSide side;
+  final BorderRadius borderRadius;
+  final SmoothRectangleBorder shaper;
+
+  _BorderPainter(this.side, this.borderRadius, this.shaper);
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (side != BorderSide.none &&
+        side.style == BorderStyle.solid &&
+        side.width > 0) {
+      final Path path = shaper.getPath(
+        borderRadius.toRRect(Offset.zero & size).deflate(side.width / 2),
+      );
+      final Paint paint = side.toPaint()..isAntiAlias = true;
+      canvas.drawPath(path, paint);
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant _BorderPainter old) {
+    return old.side != side ||
+        old.borderRadius != borderRadius ||
+        old.shaper != shaper;
   }
 }

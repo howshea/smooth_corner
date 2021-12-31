@@ -32,11 +32,11 @@ class SmoothRectangleBorder extends OutlinedBorder {
 
   @override
   Path getInnerPath(Rect rect, {TextDirection? textDirection}) {
-    return _getPath(
+    return getPath(
         borderRadius.resolve(textDirection).toRRect(rect).deflate(side.width));
   }
 
-  Path _getPath(RRect rrect) {
+  Path getPath(RRect rrect) {
     var path = Path();
     if (smoothness == 0 || borderRadius == BorderRadius.zero) {
       path.addRRect(rrect);
@@ -181,7 +181,7 @@ class SmoothRectangleBorder extends OutlinedBorder {
 
   @override
   Path getOuterPath(Rect rect, {TextDirection? textDirection}) {
-    return _getPath(borderRadius.resolve(textDirection).toRRect(rect));
+    return getPath(borderRadius.resolve(textDirection).toRRect(rect));
   }
 
   @override
@@ -191,11 +191,11 @@ class SmoothRectangleBorder extends OutlinedBorder {
       case BorderStyle.none:
         break;
       case BorderStyle.solid:
-        final Path path = _getPath(borderRadius
+        final Path path = getPath(borderRadius
             .resolve(textDirection)
             .toRRect(rect)
             .deflate(side.width / 2));
-        final Paint paint = side.toPaint();
+        final Paint paint = side.toPaint()..isAntiAlias = true;
         canvas.drawPath(path, paint);
         break;
     }
@@ -219,6 +219,25 @@ class SmoothRectangleBorder extends OutlinedBorder {
       side: side ?? this.side,
       smoothness: smoothness ?? this.smoothness,
     );
+  }
+
+  @override
+  int get hashCode {
+    return hashValues(
+      smoothness,
+      borderRadius,
+      side,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other.runtimeType != runtimeType) return false;
+    return other is SmoothRectangleBorder &&
+        other.smoothness == smoothness &&
+        other.borderRadius == borderRadius &&
+        other.side == side;
   }
 }
 
@@ -282,7 +301,7 @@ class Corner {
         radiusY = rrect.brRadiusY;
         break;
     }
-    var radius = min(radiusX, radiusY);
+    var radius = max(0.0, min(radiusX, radiusY));
     return min(radius, shortestSide / 2);
   }
 }
