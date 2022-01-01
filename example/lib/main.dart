@@ -76,9 +76,14 @@ class _MyHomePageState extends State<MyHomePage> {
                     smoothness: smoothness,
                     side: BorderSide(color: Colors.teal, width: 2),
                     borderRadius: BorderRadius.circular(radius),
-                    child: Text(
-                        'No one shall be held in slavery or servitude; slavery and the slave trade shall be prohibited in all their forms.'),
+                    child: _ExampleText(),
                     alignment: Alignment.center,
+                  ),
+                  SmoothCard(
+                    smoothness: smoothness,
+                    borderRadius: BorderRadius.circular(radius),
+                    elevation: 6,
+                    child: Center(child: _ExampleText()),
                   ),
                   Container(
                     width: kIsWeb ? 400 : 200,
@@ -128,5 +133,17 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
     );
+  }
+}
+
+class _ExampleText extends StatelessWidget {
+  const _ExampleText({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+        'No one shall be held in slavery or servitude; slavery and the slave trade shall be prohibited in all their forms.');
   }
 }
