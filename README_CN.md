@@ -9,15 +9,89 @@
 
 ![Simulator Screen Shot](https://user-images.githubusercontent.com/17538852/148490341-82821630-e4e7-4858-862d-d74049bd4002.png)
 
+
+
 ## Usage
+
+
+
 ### 依赖 package
+
 ```yaml
 dependencies:
   smooth_corner: ^1.0.0
 ```
 
-### 普通控件
-在 shapeDecoration 中传入 SmoothRectangleBorder，设置你需要的圆角和平滑度（0.0 - 1.0)
+
+### 内置组件
+
+该库提供了数个可以调整平滑圆角的常用 Widget。
+
+均额外提供了三个参数 `smoothness、side、borderRadius`，用于控制平滑圆角和边框。
+
+`smoothness` 代表平滑度，范围为 [0, 1.0]
+
+`side` 的类型为 `BorderSide`，用于设置边框
+
+`borderRadius` 用于设置圆角半径，需要注意的是，radius 的 x 和 y 值如果不相等，会选择最小的那个
+
+
+
+#### SmoothContainer
+
+`SmoothContainer` 包含 Container 的所有参数
+
+```dart
+SmoothContainer(
+  width: 200,
+  height: 200,
+  smoothness: 0.6,
+  side: BorderSide(color: Colors.cyan, width: 2),
+  borderRadius: BorderRadius.circular(40),
+  child: child,
+  alignment: Alignment.center,
+),
+```
+
+
+
+#### SmoothImage
+
+为了实现图片也可以添加边框，提供了`SmoothImage`，image 参数接受一个 Image Widget
+```dart
+SmoothImage(
+  smoothness: 0.6,
+  side: BorderSide(color: Colors.deepOrange, width: 4),
+  borderRadius: BorderRadius.circular(40),
+  image: Image.network(
+    url,
+    fit: BoxFit.cover,
+  ),
+```
+
+
+
+#### SmoothCard
+
+`SmoothCard` 包含 Card 的所有参数
+
+```dart
+SmoothCard(
+  smoothness: 0.6,
+  borderRadius: BorderRadius.circular(40),
+  elevation: 6,
+  child: child,
+),
+```
+
+
+
+### 自定义组件
+
+上述组件的平滑圆角能力均由 `SmoothRectangleBorder` 实现，你可以使用这个 ShapeBorder 自由定制你的平滑圆角组件
+
+#### ShapeDecoration
+
 ```dart
 Container(
   width: 200,
@@ -34,8 +108,8 @@ Container(
 ),
 ```
 
-### 图片控件切割
-在Image 外层包裹 ClipPath，其参数 clipper 使用 ShapeBorderClipper，接着传入 SmoothRectangleBorder
+#### ShapeBorderClipper
+
 ```dart
 Container(
   width: 200,
@@ -48,7 +122,9 @@ Container(
             BorderRadius.circular(40),
       ),
     ),
-    child: Image.network(''),
+    child: Image.network(url),
   ),
 ),
 ```
+
+
