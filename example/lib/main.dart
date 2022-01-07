@@ -62,7 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     height: 200,
                     child: SmoothImage(
                       smoothness: smoothness,
-                      side: BorderSide(color: Colors.teal, width: 4),
+                      side: BorderSide(color: Colors.deepOrange, width: 4),
                       borderRadius: BorderRadius.circular(radius),
                       image: Image.network(
                         "https://img1.mydrivers.com/img/20200424/s_cf611107e2d2469fa54b0d8ae2ee5a31.jpg",
@@ -74,7 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     width: kIsWeb ? 400 : 200,
                     height: kIsWeb ? 400 : 200,
                     smoothness: smoothness,
-                    side: BorderSide(color: Colors.teal, width: 2),
+                    side: BorderSide(color: Colors.cyan, width: 2),
                     borderRadius: BorderRadius.circular(radius),
                     child: _ExampleText(),
                     alignment: Alignment.center,
@@ -91,7 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     alignment: Alignment.center,
                     decoration: ShapeDecoration(
                       shape: SmoothBorderDebug(
-                        side: BorderSide(color: Colors.cyan, width: 4),
+                        side: BorderSide(color: Colors.blueGrey, width: 4),
                         borderRadius: BorderRadius.circular(radius),
                         smoothness: smoothness,
                       ),
