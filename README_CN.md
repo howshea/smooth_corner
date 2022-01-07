@@ -1,4 +1,9 @@
+Language: [English](README.md) | [中文简体](README_CN.md)
+
 # smooth_corner
+
+[![Pub](https://img.shields.io/badge/pub-1.0.0-blue?style=flat-square)](https://pub.dev/packages/smooth_corner) ![](https://img.shields.io/badge/platform-flutter%7Cflutter--web-red?style=flat-square)
+
 ## 项目介绍
 
 在 Flutter 中实现 iOS 的平滑圆角，模仿了 Figma 的 「corner smoothing」 功能，算法也来自于 Figma 的blog「[Desperately seeking squircles](https://www.figma.com/blog/desperately-seeking-squircles/)」。
@@ -7,7 +12,7 @@
 
 你可以在 example 工程中查看我写的 Debug 圆角组件和图片示例，调整其平滑度和圆角大小，来查看其中圆角曲线的变化。
 
-![Simulator Screen Shot](https://user-images.githubusercontent.com/17538852/148490341-82821630-e4e7-4858-862d-d74049bd4002.png)
+<img width="720" alt="Example screen shot" src="https://user-images.githubusercontent.com/17538852/148490341-82821630-e4e7-4858-862d-d74049bd4002.png">
 
 
 
@@ -29,11 +34,13 @@ dependencies:
 
 均额外提供了三个参数 `smoothness、side、borderRadius`，用于控制平滑圆角和边框。
 
-`smoothness` 代表平滑度，范围为 [0, 1.0]
+`smoothness` 代表平滑度，范围为 [0, 1.0]，按照 Figma 的标准，0.6 最接近 iOS 的圆角曲线。
 
-`side` 的类型为 `BorderSide`，用于设置边框
+![](https://user-images.githubusercontent.com/17538852/148515898-79b29e88-c709-481c-b326-2ff92246cfa2.png)
 
-`borderRadius` 用于设置圆角半径，需要注意的是，radius 的 x 和 y 值如果不相等，会选择最小的那个
+`side` 的类型为 `BorderSide`，用于设置边框。
+
+`borderRadius` 用于设置圆角半径，需要注意的是，radius 的 x 和 y 值如果不相等，会选择最小的那个。
 
 
 
@@ -126,5 +133,3 @@ Container(
   ),
 ),
 ```
-
-
