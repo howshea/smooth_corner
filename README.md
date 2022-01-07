@@ -90,7 +90,7 @@ SmoothCard(
 
 
 
-### 自定义组件
+### Custom widget
 
 The smooth rounding capabilities of the above widgets are all implemented by `SmoothRectangleBorder`, you can use this ShapeBorder to customize your smooth rounded widgets freely.
 
