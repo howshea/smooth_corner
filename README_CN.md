@@ -7,7 +7,7 @@
 
 你可以在 example 工程中查看我写的 Debug 圆角组件和图片示例，调整其平滑度和圆角大小，来查看其中圆角曲线的变化。
 
-![example project screenshot](https://user-images.githubusercontent.com/17538852/144412038-f05d33dd-e547-4b23-847f-d52414f79b5e.png)
+![Simulator Screen Shot](https://user-images.githubusercontent.com/17538852/148490341-82821630-e4e7-4858-862d-d74049bd4002.png)
 
 ## Usage
 ### 依赖 package
