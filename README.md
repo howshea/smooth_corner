@@ -2,7 +2,7 @@ Language: [English](README.md) | [中文简体](README_CN.md)
 
 # smooth_corner
 
-[![Pub](https://img.shields.io/badge/pub-1.0.0-blue?style=flat-square)](https://pub.dev/packages/smooth_corner) ![](https://img.shields.io/badge/platform-flutter%7Cflutter--web-red?style=flat-square)
+[![Pub](https://img.shields.io/badge/pub-1.1.0-blue?style=flat-square)](https://pub.dev/packages/smooth_corner) ![](https://img.shields.io/badge/platform-flutter%7Cflutter--web-red?style=flat-square)
 
 The smooth rounded corners of iOS are implemented in Flutter, imitating Figma's "corner smoothing" function. The algorithm also comes from Figma's blog "[Desperately seeking squircles](https://www.figma.com/blog/desperately-seeking-squircles/)".
 
