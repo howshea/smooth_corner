@@ -33,10 +33,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   double radius = kIsWeb ? 80 : 40;
   double smoothness = 0.6;
-  bool topLeftEnable = true;
-  bool topRightEnable = true;
-  bool bottomLeftEnable = true;
-  bool bottomRightEnable = true;
 
   @override
   Widget build(BuildContext context) {
