@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:smooth_corner/smooth_corner.dart';
 
-class SmoothImage extends StatelessWidget {
+class SmoothClipRRect extends StatelessWidget {
   /// The radius for each corner.
   ///
   /// Negative radius values are clamped to 0.0 by [getInnerPath] and
@@ -25,14 +25,14 @@ class SmoothImage extends StatelessWidget {
   /// Otherwise the outline is centered over the shape's boundary.
   final BorderSide side;
 
-  final Image image;
+  final Widget child;
 
-  const SmoothImage({
+  const SmoothClipRRect({
     Key? key,
     this.smoothness = 0.0,
     this.borderRadius = BorderRadius.zero,
     this.side = BorderSide.none,
-    required this.image,
+    required this.child,
   }) : super(key: key);
 
   @override
@@ -42,13 +42,13 @@ class SmoothImage extends StatelessWidget {
       borderRadius: borderRadius - BorderRadius.circular(side.width),
     );
     return CustomPaint(
-      child: Container(
+      child: Padding(
         padding: EdgeInsets.all(max(0.0, side.width - 1)),
         child: ClipPath(
           clipper: ShapeBorderClipper(
             shape: shaper,
           ),
-          child: image,
+          child: child,
         ),
       ),
       foregroundPainter: _BorderPainter(side, borderRadius, shaper),

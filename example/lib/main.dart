@@ -43,7 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Expanded(
+          Flexible(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: GridView(
@@ -53,22 +53,16 @@ class _MyHomePageState extends State<MyHomePage> {
                   mainAxisSpacing: 10,
                 ),
                 children: [
-                  Container(
-                    width: 200,
-                    height: 200,
-                    child: SmoothImage(
-                      smoothness: smoothness,
-                      side: BorderSide(color: Colors.deepOrange, width: 4),
-                      borderRadius: BorderRadius.circular(radius),
-                      image: Image.network(
-                        "https://img1.mydrivers.com/img/20200424/s_cf611107e2d2469fa54b0d8ae2ee5a31.jpg",
-                        fit: BoxFit.cover,
-                      ),
+                  SmoothClipRRect(
+                    smoothness: smoothness,
+                    side: BorderSide(color: Colors.deepOrange, width: 4),
+                    borderRadius: BorderRadius.circular(radius),
+                    child: Image.network(
+                      "https://img1.mydrivers.com/img/20200424/s_cf611107e2d2469fa54b0d8ae2ee5a31.jpg",
+                      fit: BoxFit.cover,
                     ),
                   ),
                   SmoothContainer(
-                    width: kIsWeb ? 400 : 200,
-                    height: kIsWeb ? 400 : 200,
                     smoothness: smoothness,
                     side: BorderSide(color: Colors.cyan, width: 2),
                     borderRadius: BorderRadius.circular(radius),
@@ -82,8 +76,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: Center(child: _ExampleText()),
                   ),
                   Container(
-                    width: kIsWeb ? 400 : 200,
-                    height: kIsWeb ? 400 : 200,
                     alignment: Alignment.center,
                     decoration: ShapeDecoration(
                       shape: SmoothBorderDebug(

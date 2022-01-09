@@ -59,15 +59,15 @@ SmoothContainer(
 
 
 
-#### SmoothImage
+#### SmoothClipRRect
 
-In order to achieve that the picture can also add a border, `SmoothImage` is provided, and the image parameter accepts an `Image`.
+In order to achieve that the image can also add a border, `SmoothClipRRect` is provided.
 ```dart
-SmoothImage(
+SmoothClipRRect(
   smoothness: 0.6,
   side: BorderSide(color: Colors.deepOrange, width: 4),
   borderRadius: BorderRadius.circular(40),
-  image: Image.network(
+  child: Image.network(
     url,
     fit: BoxFit.cover,
   ),

@@ -62,15 +62,15 @@ SmoothContainer(
 
 
 
-#### SmoothImage
+#### SmoothClipRRect
 
-为了实现图片也可以添加边框，提供了`SmoothImage`，image 参数接受一个 Image Widget
+为了实现图片控件也可以添加边框，提供了`SmoothClipRRect`
 ```dart
-SmoothImage(
+SmoothClipRRect(
   smoothness: 0.6,
   side: BorderSide(color: Colors.deepOrange, width: 4),
   borderRadius: BorderRadius.circular(40),
-  image: Image.network(
+  child: Image.network(
     url,
     fit: BoxFit.cover,
   ),
