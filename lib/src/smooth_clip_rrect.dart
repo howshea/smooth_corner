@@ -29,7 +29,7 @@ class SmoothClipRRect extends StatelessWidget {
 
   const SmoothClipRRect({
     Key? key,
-    this.smoothness = 0.0,
+    this.smoothness = 0.6,
     this.borderRadius = BorderRadius.zero,
     this.side = BorderSide.none,
     required this.child,

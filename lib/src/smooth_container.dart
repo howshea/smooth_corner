@@ -25,7 +25,7 @@ class SmoothContainer extends Container {
 
   SmoothContainer({
     Key? key,
-    this.smoothness = 0.0,
+    this.smoothness = 0.6,
     this.borderRadius = BorderRadius.zero,
     this.side = BorderSide.none,
     Widget? child,

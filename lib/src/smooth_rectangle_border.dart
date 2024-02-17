@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 
 enum CornerLocation { tl, tr, bl, br }
@@ -210,6 +211,32 @@ class SmoothRectangleBorder extends OutlinedBorder {
   }
 
   @override
+  ShapeBorder? lerpFrom(ShapeBorder? a, double t) {
+    if (a is SmoothRectangleBorder) {
+      return SmoothRectangleBorder(
+        side: BorderSide.lerp(a.side, side, t),
+        borderRadius:
+            BorderRadiusGeometry.lerp(a.borderRadius, borderRadius, t)!,
+        smoothness: lerpDouble(a.smoothness, smoothness, t)!,
+      );
+    }
+    return super.lerpFrom(a, t);
+  }
+
+  @override
+  ShapeBorder? lerpTo(ShapeBorder? b, double t) {
+    if (b is SmoothRectangleBorder) {
+      return SmoothRectangleBorder(
+        side: BorderSide.lerp(side, b.side, t),
+        borderRadius:
+            BorderRadiusGeometry.lerp(borderRadius, b.borderRadius, t)!,
+        smoothness: lerpDouble(smoothness, b.smoothness, t)!,
+      );
+    }
+    return super.lerpTo(b, t);
+  }
+
+  @override
   SmoothRectangleBorder copyWith(
       {BorderSide? side,
       BorderRadiusGeometry? borderRadius,
@@ -223,7 +250,7 @@ class SmoothRectangleBorder extends OutlinedBorder {
 
   @override
   int get hashCode {
-    return hashValues(
+    return Object.hash(
       smoothness,
       borderRadius,
       side,
@@ -257,6 +284,7 @@ class Corner {
   late double shortestSide;
 
   Corner(RRect rrect, CornerLocation location, double smoothness) {
+    if (smoothness > 1) smoothness = 1;
     shortestSide = rrect.shortestSide;
 
     radius = _getRadius(rrect, location);

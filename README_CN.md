@@ -24,7 +24,7 @@ Language: [English](README.md) | [中文简体](README_CN.md)
 
 ```yaml
 dependencies:
-  smooth_corner: ^1.0.0
+  smooth_corner: ^1.1.0
 ```
 
 
