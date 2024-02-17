@@ -92,7 +92,6 @@ SmoothCard(
 ```
 
 
-
 ### 自定义组件
 
 上述组件的平滑圆角能力均由 `SmoothRectangleBorder` 实现，你可以使用这个 ShapeBorder 自由定制你的平滑圆角组件
@@ -132,4 +131,8 @@ Container(
     child: Image.network(url),
   ),
 ),
-```
+```  
+
+#### SmoothOutlineInputBorder（Beta）
+
+`SmoothOutlineInputBorder` 类似于 `SmoothRectangleBorder`，是对 `OutlineInputBorder` 的平滑圆角实现，但是目前尚不支持 `labelText`

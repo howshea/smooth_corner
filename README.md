@@ -133,4 +133,9 @@ Container(
     child: Image.network(url),
   ),
 ),
-```
+```  
+
+
+#### SmoothOutlineInputBorder (Beta)
+
+`SmoothOutlineInputBorder` is similar to `SmoothRectangleBorder`, it is a smooth rounded corner implementation for `OutlineInputBorder`, but currently does not support `labelText`.
