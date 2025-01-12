@@ -88,8 +88,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: Text(
                       'radius:${radius.toInt()} \nsmooth:${smoothness.toStringAsFixed(2)}',
                       style: kIsWeb
-                          ? Theme.of(context).textTheme.headline4
-                          : Theme.of(context).textTheme.bodyText1,
+                          ? Theme.of(context).textTheme.headlineMedium
+                          : Theme.of(context).textTheme.bodyLarge,
                     ),
                   ),
                 ],
