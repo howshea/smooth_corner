@@ -2,7 +2,7 @@ Language: [English](README.md) | [中文简体](README_CN.md)
 
 # smooth_corner
 
-[![Pub](https://img.shields.io/badge/pub-1.1.0-blue?style=flat-square)](https://pub.dev/packages/smooth_corner) ![](https://img.shields.io/badge/platform-flutter%7Cflutter--web-red?style=flat-square)
+[![Pub](https://img.shields.io/badge/pub-1.1.1-blue?style=flat-square)](https://pub.dev/packages/smooth_corner) ![](https://img.shields.io/badge/platform-flutter%7Cflutter--web-red?style=flat-square)
 
 ## 项目介绍
 
@@ -24,7 +24,7 @@ Language: [English](README.md) | [中文简体](README_CN.md)
 
 ```yaml
 dependencies:
-  smooth_corner: ^1.1.0
+  smooth_corner: ^1.1.1
 ```
 
 

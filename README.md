@@ -2,7 +2,7 @@ Language: [English](README.md) | [中文简体](README_CN.md)
 
 # smooth_corner
 
-[![Pub](https://img.shields.io/badge/pub-1.1.0-blue?style=flat-square)](https://pub.dev/packages/smooth_corner) ![](https://img.shields.io/badge/platform-flutter%7Cflutter--web-red?style=flat-square)
+[![Pub](https://img.shields.io/badge/pub-1.1.1-blue?style=flat-square)](https://pub.dev/packages/smooth_corner) ![](https://img.shields.io/badge/platform-flutter%7Cflutter--web-red?style=flat-square)
 
 Implement smooth iOS-style rounded corners in Flutter, mimicking Figma's "corner smoothing" feature. The algorithm is also inspired by Figma's blog post "[Desperately seeking squircles](https://www.figma.com/blog/desperately-seeking-squircles/)".
 
@@ -20,7 +20,7 @@ You can view the debug rounded corner components and image examples I wrote in t
 
 ```yaml
 dependencies:
-  smooth_corner: ^1.1.0
+  smooth_corner: ^1.1.1
 ```
 
 
